@@ -1,0 +1,62 @@
+MariaDB [task_manager]>  SELECT
+    ->  a.id, a.task_name, b.task_status, b.task_comments, d.category_name as 'Category',DATEDIFF(a.task_duration_end, a.ask_duration_start) as 'Lama Pengerjaan',c.name as 'Create By', (SELECT name from users where c.id =b.user_id ) as 'Verified By'
+    -> FROM task_plans a
+    -> LEFT JOIN task_dailies b ON a.id = b.plan_id
+    ->  INNER JOIN users c ON a.user_create = c.id
+    -> RIGHT JOIN task_categories d ON a.category_id = d.id;
++--------------------------------------+-----------------------------------------+-------------+---------------+--------------+-----------------+-----------+-------------+
+| id                                   | task_name                               | task_status | task_comments | Category     | Lama Pengerjaan | Create By | Verified By |
++--------------------------------------+-----------------------------------------+-------------+---------------+--------------+-----------------+-----------+-------------+
+| f1ee037b-9135-41d2-9757-091391df4fb8 | Mendokumentasikan Code                  | NULL        | NULL          | Analisis     |               0 | User A    | NULL        |
+| 924eaa0e-c8f1-4132-a032-1d98c176a8c3 | Membuat Modul add_to_cart pada Aplikasi | NULL        | NULL          | Administrasi |              20 | User A    | NULL        |
+| c96fdbd6-a3a4-42e3-b437-444ffd734a36 | Menganalisa Data Kemahasiswaan          | NULL        | NULL          | Teknikal     |               7 | User A    | NULL        |
++--------------------------------------+-----------------------------------------+-------------+---------------+--------------+-----------------+-----------+-------------+
+3 rows in set (0.001 sec)
+
+MariaDB [task_manager]>  SELECT
+    -> a.id, a.task_name, b.task_status, b.task_comments, d.category_name as 'Category',DATEDIFF(a.task_duration_end, a.ask_duration_start) as 'Lama Pengerjaan',c.name as 'Create By', (SELECT name from users where c.id =b.user_id ) as 'Verified By'
+    -> FROM task_plans a
+    -> WHERE d.name ='Teknikal'
+    -> LEFT JOIN task_dailies b ON a.id = b.plan_id
+    ->  INNER JOIN users c ON a.user_create = c.id
+    -> RIGHT JOIN task_categories d ON a.category_id = d.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'LEFT JOIN task_dailies b ON a.id = b.plan_id
+ INNER JOIN users c ON a.user_cr...' at line 5
+MariaDB [task_manager]>  SELECT
+    -> a.id, a.task_name, b.task_status, b.task_comments, d.category_name as 'Category',DATEDIFF(a.task_duration_end, a.ask_duration_start) as 'Lama Pengerjaan',c.name as 'Create By', (SELECT name from users where c.id =b.user_id ) as 'Verified By'
+    -> FROM task_plans a
+    -> LEFT JOIN task_dailies b ON a.id = b.plan_id
+    -> INNER JOIN users c ON a.user_create = c.id
+    -> RIGHT JOIN task_categories d ON a.category_id = d.id;
++--------------------------------------+-----------------------------------------+-------------+---------------+--------------+-----------------+-----------+-------------+
+| id                                   | task_name                               | task_status | task_comments | Category     | Lama Pengerjaan | Create By | Verified By |
++--------------------------------------+-----------------------------------------+-------------+---------------+--------------+-----------------+-----------+-------------+
+| f1ee037b-9135-41d2-9757-091391df4fb8 | Mendokumentasikan Code                  | NULL        | NULL          | Analisis     |               0 | User A    | NULL        |
+| 924eaa0e-c8f1-4132-a032-1d98c176a8c3 | Membuat Modul add_to_cart pada Aplikasi | NULL        | NULL          | Administrasi |              20 | User A    | NULL        |
+| c96fdbd6-a3a4-42e3-b437-444ffd734a36 | Menganalisa Data Kemahasiswaan          | NULL        | NULL          | Teknikal     |               7 | User A    | NULL        |
++--------------------------------------+-----------------------------------------+-------------+---------------+--------------+-----------------+-----------+-------------+
+3 rows in set (0.001 sec)
+
+MariaDB [task_manager]> SELECT
+    -> a.id, a.task_name, b.task_status, b.task_comments, d.category_name as 'Category',DATEDIFF(a.task_duration_end, a.ask_duration_start) as 'Lama Pengerjaan',c.name as 'Create By', (SELECT name from users where c.id =b.user_id ) as 'Verified By'
+    -> FROM task_plans a
+    -> LEFT JOIN task_dailies b ON a.id = b.plan_id
+    -> INNER JOIN users c ON a.user_create = c.id
+    -> RIGHT JOIN task_categories d ON a.category_id = d.id
+    -> WHERE d.name='Teknikal';
+ERROR 1054 (42S22): Unknown column 'd.name' in 'where clause'
+MariaDB [task_manager]> SELECT
+    -> a.id, a.task_name, b.task_status, b.task_comments, d.category_name as 'Category',DATEDIFF(a.task_duration_end, a.ask_duration_start) as 'Lama Pengerjaan',c.name as 'Create By', (SELECT name from users where c.id =b.user_id ) as 'Verified By'
+    -> FROM task_plans a
+    -> LEFT JOIN task_dailies b ON a.id = b.plan_id
+    -> INNER JOIN users c ON a.user_create = c.id
+    -> RIGHT JOIN task_categories d ON a.category_id = d.id
+    -> WHERE d.category_name ='Teknikal';
++--------------------------------------+--------------------------------+-------------+---------------+----------+-----------------+-----------+-------------+
+| id                                   | task_name                      | task_status | task_comments | Category | Lama Pengerjaan | Create By | Verified By |
++--------------------------------------+--------------------------------+-------------+---------------+----------+-----------------+-----------+-------------+
+| c96fdbd6-a3a4-42e3-b437-444ffd734a36 | Menganalisa Data Kemahasiswaan | NULL        | NULL          | Teknikal |               7 | User A    | NULL        |
++--------------------------------------+--------------------------------+-------------+---------------+----------+-----------------+-----------+-------------+
+1 row in set (0.001 sec)
+
+MariaDB [task_manager]> notee
